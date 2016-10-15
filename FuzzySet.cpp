@@ -1,7 +1,10 @@
 #include "FuzzySet.h"
 
+template <typename T> TrapezoidFuzzySet<T>::TrapezoidFuzzySet(T a, T b, T c, T d)
+: a(a), b(b), c(c), d(d) {}
 
-float TrapezoidFuzzySet::membershipFunction(T u)
+
+template <typename T> float TrapezoidFuzzySet<T>::membershipFunction(T u)
 {
   if (u < this->a || u > this->d)
   {

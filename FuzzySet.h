@@ -6,7 +6,7 @@ template <typename T> class FuzzySet
 {
   public:
     std::string label;
-    virtual float membershipFunction(T value);
+    virtual float membershipFunction(T value) = 0;
   private:
   protected:
 };
@@ -23,5 +23,7 @@ template <typename T> class TrapezoidFuzzySet : FuzzySet<T>
   private:
   protected:
 };
+
+#include "FuzzySet.cpp"
 
 #endif //FUZZYSET_H
