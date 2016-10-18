@@ -2,9 +2,9 @@
 #define FUZZYSET_H
 #include <string>
 
-template <typename T> class AndFuzzySet;
-template <typename T> class OrFuzzySet;
-template <typename T> class NotFuzzySet;
+template <typename T> class IntersectionFuzzySet;
+template <typename T> class UnionFuzzy;
+template <typename T> class ComplementFuzzy;
 
 // ABSTRACT FUZZYSET class prototype
 template <typename T> class FuzzySet
@@ -12,9 +12,9 @@ template <typename T> class FuzzySet
   public:
     std::string label;
     virtual double membershipFunction(const T& value) const = 0;
-    AndFuzzySet<T> operator* (const FuzzySet<T>&) const;
-    OrFuzzySet<T> operator+ (const FuzzySet<T>&) const;
-    NotFuzzySet<T> operator! () const;
+    IntersectionFuzzySet<T> operator* (const FuzzySet<T>&) const;
+    UnionFuzzy<T> operator+ (const FuzzySet<T>&) const;
+    ComplementFuzzy<T> operator! () const;
   private:
   protected:
 };
@@ -34,30 +34,30 @@ template <typename T> class TrapezoidFuzzySet : public FuzzySet<T>
 };
 
 // AND FUZZYSET class prototype
-template <typename T> class AndFuzzySet : public FuzzySet<T>
+template <typename T> class IntersectionFuzzySet : public FuzzySet<T>
 {
   public:
-    AndFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs);
+    IntersectionFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs);
     const FuzzySet<T>& lhs;
     const FuzzySet<T>& rhs;
     double membershipFunction(const T& value) const;
 };
 
 // OR FUZZYSET class prototype
-template <typename T> class OrFuzzySet : public FuzzySet<T>
+template <typename T> class UnionFuzzy : public FuzzySet<T>
 {
   public:
-    OrFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs);
+    UnionFuzzy(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs);
     const FuzzySet<T>& lhs;
     const FuzzySet<T>& rhs;
     double membershipFunction(const T& value) const;
 };
 
 // NOT FUZZYSET class prototype
-template <typename T> class NotFuzzySet : public FuzzySet<T>
+template <typename T> class ComplementFuzzy : public FuzzySet<T>
 {
   public:
-    NotFuzzySet(const FuzzySet<T>& lhs);
+    ComplementFuzzy(const FuzzySet<T>& lhs);
     const FuzzySet<T>& lhs;
     double membershipFunction(const T& value) const;
 };

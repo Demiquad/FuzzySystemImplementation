@@ -22,14 +22,14 @@ template <typename T> double TrapezoidFuzzySet<T>::membershipFunction(const T& u
 }
 
 // AND implementation
-template <typename T> AndFuzzySet<T> FuzzySet<T>::operator* (const FuzzySet<T>& rhs) const
+template <typename T> IntersectionFuzzySet<T> FuzzySet<T>::operator* (const FuzzySet<T>& rhs) const
 {
-  return AndFuzzySet<T>(*this, rhs);
+  return IntersectionFuzzySet<T>(*this, rhs);
 }
 
-template <typename T> AndFuzzySet<T>::AndFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
+template <typename T> IntersectionFuzzySet<T>::IntersectionFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
 
-template <typename T> double AndFuzzySet<T>::membershipFunction(const T& u) const
+template <typename T> double IntersectionFuzzySet<T>::membershipFunction(const T& u) const
 {
   double v1 = this->lhs.membershipFunction(u);
   double v2 = this->rhs.membershipFunction(u);
@@ -37,14 +37,14 @@ template <typename T> double AndFuzzySet<T>::membershipFunction(const T& u) cons
 }
 
 // OR implementation
-template <typename T> OrFuzzySet<T> FuzzySet<T>::operator+ (const FuzzySet<T>& rhs) const
+template <typename T> UnionFuzzy<T> FuzzySet<T>::operator+ (const FuzzySet<T>& rhs) const
 {
-  return OrFuzzySet<T>(*this, rhs);
+  return UnionFuzzy<T>(*this, rhs);
 }
 
-template <typename T> OrFuzzySet<T>::OrFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
+template <typename T> UnionFuzzy<T>::UnionFuzzy(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
 
-template <typename T> double OrFuzzySet<T>::membershipFunction(const T& u) const
+template <typename T> double UnionFuzzy<T>::membershipFunction(const T& u) const
 {
   double v1 = this->lhs.membershipFunction(u);
   double v2 = this->rhs.membershipFunction(u);
@@ -52,14 +52,14 @@ template <typename T> double OrFuzzySet<T>::membershipFunction(const T& u) const
 }
 
 // NOT implementation
-template <typename T> NotFuzzySet<T> FuzzySet<T>::operator! () const
+template <typename T> ComplementFuzzy<T> FuzzySet<T>::operator! () const
 {
-  return NotFuzzySet<T>(*this);
+  return ComplementFuzzy<T>(*this);
 }
 
-template <typename T> NotFuzzySet<T>::NotFuzzySet(const FuzzySet<T>& lhs) : lhs(lhs) {}
+template <typename T> ComplementFuzzy<T>::ComplementFuzzy(const FuzzySet<T>& lhs) : lhs(lhs) {}
 
-template <typename T> double NotFuzzySet<T>::membershipFunction(const T& u) const
+template <typename T> double ComplementFuzzy<T>::membershipFunction(const T& u) const
 {
   return 1 - this->lhs.membershipFunction(u);
 }

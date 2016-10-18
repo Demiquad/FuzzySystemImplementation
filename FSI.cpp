@@ -30,23 +30,23 @@ int main()
     std::cout << "u2 = " << i << " : " << FS2.membershipFunction(i) << std::endl;
   }
 
-  AndFuzzySet <double> ANDFS = FS1*FS2;
+  IntersectionFuzzySet <double> ANDFS = FS1*FS2;
   
   for(double i = 1.0; i < 4.0; i += 0.05)
   {
     std::cout << "uAND = " << i << " : " << ANDFS.membershipFunction(i) << std::endl;
   }
 
-  OrFuzzySet <double> ORFS = FS1+FS2;
+  UnionFuzzy <double> ORFS = FS1+FS2;
   
   for(double i = 1.0; i < 4.0; i += 0.05)
   {
     std::cout << "uOR = " << i << " : " << ORFS.membershipFunction(i) << std::endl;
   }
 
-  NotFuzzySet <double> N1(FS1), N2(FS2);
-  OrFuzzySet <double> NOR(N1, N2);
-  NotFuzzySet <double> NOTFS = !NOR;
+  ComplementFuzzy <double> N1(FS1), N2(FS2);
+  UnionFuzzy <double> NOR(N1, N2);
+  ComplementFuzzy <double> NOTFS = !NOR;
   for (double i = 1.0; i < 4.0; i += 0.05)
   {
     double pippo = NOTFS.membershipFunction(i);
