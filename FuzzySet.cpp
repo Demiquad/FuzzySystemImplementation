@@ -1,10 +1,9 @@
 #include "FuzzySet.h"
 
-template <typename T> TrapezoidFuzzySet<T>::TrapezoidFuzzySet(T a, T b, T c, T d)
-: a(a), b(b), c(c), d(d) {}
+template <typename T> TrapezoidFuzzySet<T>::TrapezoidFuzzySet(const T& a, const T& b, const T& c, const T& d) : a(a), b(b), c(c), d(d) {}
 
 
-template <typename T> float TrapezoidFuzzySet<T>::membershipFunction(T u)
+template <typename T> double TrapezoidFuzzySet<T>::membershipFunction(const T& u) const
 {
   if (u < this->a || u > this->d)
   {
@@ -18,5 +17,45 @@ template <typename T> float TrapezoidFuzzySet<T>::membershipFunction(T u)
   {
     return (u-a)/(b-a);
   }
-  return (u-c)/(d-c);
+  return (d-u)/(d-c);
+}
+
+template <typename T> AndFuzzySet<T> FuzzySet<T>::operator&& (const FuzzySet<T>& rhs) const
+{
+  return AndFuzzySet<T>(*this, rhs);
+}
+
+template <typename T> AndFuzzySet<T>::AndFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
+
+template <typename T> double AndFuzzySet<T>::membershipFunction(const T& u) const
+{
+  double v1 = this->lhs.membershipFunction(u);
+  double v2 = this->rhs.membershipFunction(u);
+  return v1<v2?v1:v2;
+}
+
+template <typename T> OrFuzzySet<T> FuzzySet<T>::operator|| (const FuzzySet<T>& rhs) const
+{
+  return OrFuzzySet<T>(*this, rhs);
+}
+
+template <typename T> OrFuzzySet<T>::OrFuzzySet(const FuzzySet<T>& lhs, const FuzzySet<T>& rhs) : lhs(lhs), rhs(rhs) {}
+
+template <typename T> double OrFuzzySet<T>::membershipFunction(const T& u) const
+{
+  double v1 = this->lhs.membershipFunction(u);
+  double v2 = this->rhs.membershipFunction(u);
+  return v1>v2?v1:v2;
+}
+
+template <typename T> NotFuzzySet<T> FuzzySet<T>::operator! () const
+{
+  return NotFuzzySet<T>(*this);
+}
+
+template <typename T> NotFuzzySet<T>::NotFuzzySet(const FuzzySet<T>& lhs) : lhs(lhs) {}
+
+template <typename T> double NotFuzzySet<T>::membershipFunction(const T& u) const
+{
+  return 1 - this->lhs.membershipFunction(u);
 }

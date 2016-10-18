@@ -1,0 +1,7 @@
+#ifndef FUZZYOPERATOR_H
+#define FUZZYOPERATOR_H
+
+
+
+
+#endif //FUZZYOPERATOR_H
