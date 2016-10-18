@@ -6,18 +6,20 @@ template <typename T> class AndFuzzySet;
 template <typename T> class OrFuzzySet;
 template <typename T> class NotFuzzySet;
 
+// ABSTRACT FUZZYSET class prototype
 template <typename T> class FuzzySet
 {
   public:
     std::string label;
     virtual double membershipFunction(const T& value) const = 0;
-    AndFuzzySet<T> operator&& (const FuzzySet<T>&) const;
-    OrFuzzySet<T> operator|| (const FuzzySet<T>&) const;
+    AndFuzzySet<T> operator* (const FuzzySet<T>&) const;
+    OrFuzzySet<T> operator+ (const FuzzySet<T>&) const;
     NotFuzzySet<T> operator! () const;
   private:
   protected:
 };
 
+// TRAPEZOID FUZZYSET class prototype
 template <typename T> class TrapezoidFuzzySet : public FuzzySet<T>
 {
   public:
@@ -31,6 +33,7 @@ template <typename T> class TrapezoidFuzzySet : public FuzzySet<T>
   protected:
 };
 
+// AND FUZZYSET class prototype
 template <typename T> class AndFuzzySet : public FuzzySet<T>
 {
   public:
@@ -40,6 +43,7 @@ template <typename T> class AndFuzzySet : public FuzzySet<T>
     double membershipFunction(const T& value) const;
 };
 
+// OR FUZZYSET class prototype
 template <typename T> class OrFuzzySet : public FuzzySet<T>
 {
   public:
@@ -49,6 +53,7 @@ template <typename T> class OrFuzzySet : public FuzzySet<T>
     double membershipFunction(const T& value) const;
 };
 
+// NOT FUZZYSET class prototype
 template <typename T> class NotFuzzySet : public FuzzySet<T>
 {
   public:

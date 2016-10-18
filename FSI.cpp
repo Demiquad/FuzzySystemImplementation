@@ -30,14 +30,14 @@ int main()
     std::cout << "u2 = " << i << " : " << FS2.membershipFunction(i) << std::endl;
   }
 
-  AndFuzzySet <double> ANDFS = FS1&&FS2;
+  AndFuzzySet <double> ANDFS = FS1*FS2;
   
   for(double i = 1.0; i < 4.0; i += 0.05)
   {
     std::cout << "uAND = " << i << " : " << ANDFS.membershipFunction(i) << std::endl;
   }
 
-  OrFuzzySet <double> ORFS = FS1||FS2;
+  OrFuzzySet <double> ORFS = FS1+FS2;
   
   for(double i = 1.0; i < 4.0; i += 0.05)
   {
@@ -53,7 +53,6 @@ int main()
     double pluto = ANDFS.membershipFunction(i);
     std::cout << "u = " << i << " : " << pippo << " , " << pluto << " => " << (pippo == pluto?"OK":"OOOPS") << std::endl;
   }  
-  
-  
+
   return 0;
 }
